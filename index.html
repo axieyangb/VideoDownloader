@@ -72,7 +72,7 @@
           command = `PowerShell.exe -ExecutionPolicy Bypass -File ${currentDir}/scripts/download.ps1 "${url}"`;
         } else {
           // Linux command
-          command = `${currentDir}/scripts/download.sh "${url}"`;
+          command = `chmod +x /${currentDir}/scripts/bin/yt-dlp && bash /${currentDir}/scripts/download.sh "${url}"`;
         }
         
         // Update the command text in the <pre> block
