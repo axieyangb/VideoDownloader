@@ -1,6 +1,9 @@
-# Automated Video Downloader
+# UI-Based Video Downloader
+
+This tool utilizes yt-dlp.exe for downloading videos in a user-friendly manner through a graphical user interface (UI).
 
 ## Usage Instructions
+The easiest way to execute the command is by opening `index.html`, generating the command from the URL, and then executing it.
 
 If you prefer to execute the command directly without using the HTML page, navigate to the directory where the scripts are located and follow the instructions below.
 
