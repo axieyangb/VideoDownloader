@@ -12,6 +12,8 @@ if [[ ! -f "$yt_dlp_path" ]]; then
   exit 1
 fi
 
+chmod +x $yt_dlp_path
+
 # Build update command
 update_command="$yt_dlp_path --update-to stable"
 
