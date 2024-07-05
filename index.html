@@ -19,7 +19,7 @@
         <div class="input-group mb-3">
           <input id="urlInput" type="text" class="form-control" placeholder="Enter URL...">
           <div class="input-group-append">
-            <button id="downloadButton" class="btn btn-primary">Download</button>
+            <button id="downloadButton" class="btn btn-primary d-none">Download</button>
           </div>
         </div>
         <div id="commandOutput" class="mt-3" style="display: none;">
@@ -42,6 +42,13 @@
         <div class="alert alert-secondary mt-4" role="alert">
           Support Websites: <a href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md" target="_blank" rel="noopener noreferrer">Click here</a> for a list of supported websites.
         </div>
+
+         <h3 class="text-center mb-4">Update "yt-dlp" to latest</h3>
+        <pre id="updateCommand" class="bg-light p-3 rounded"></pre>
+        <button id="copyUpdateCommand" class="btn btn-outline-secondary btn-sm" data-clipboard-target="#updateCommand">
+          Copy Update Command
+        </button>
+
       </div>
     </div>
   </div>
@@ -54,7 +61,7 @@
   <script>
     // Initialize Clipboard.js for copy-to-clipboard functionality
     new ClipboardJS('#copyButton');
-
+    new ClipboardJS('#copyUpdateCommand');
     document.getElementById('downloadButton').addEventListener('click', function() {
       var url = document.getElementById('urlInput').value.trim();
       if (url !== '') {
@@ -72,7 +79,7 @@
           command = `PowerShell.exe -ExecutionPolicy Bypass -File ${currentDir}/scripts/download.ps1 "${url}"`;
         } else {
           // Linux command
-          command = `chmod +x /${currentDir}/scripts/bin/yt-dlp && bash /${currentDir}/scripts/download.sh "${url}"`;
+          command = `bash /${currentDir}/scripts/download.sh "${url}"`;
         }
         
         // Update the command text in the <pre> block
@@ -88,6 +95,29 @@
         document.getElementById('commandOutput').style.display = 'none';
       }
     });
+
+    document.getElementById('urlInput').addEventListener('keypress', function(event) {
+      // Call the existing download function
+      this.parentElement.querySelector('#downloadButton').click(); // Simulate click on download button
+    });
+
+
+    // Get current operating system
+    var os = navigator.userAgent.toLowerCase();
+    var updateCommandElement = document.getElementById('updateCommand');
+    var currentPath = window.location.href; // Get current HTML file's absolute URL
+    var currentDir = currentPath.substring(0, currentPath.lastIndexOf('/')); // Get directory path by removing the last segment (HTML file name)
+    // Remove 'file:///' prefix if present (for local file URLs)
+    if (currentDir.startsWith('file:///')) {
+      currentDir = currentDir.substring(8); // Remove 'file:///' (8 characters)
+    }
+    // Set update command based on OS
+    if (os.indexOf("win") !== -1) {
+      updateCommandElement.textContent = `PowerShell.exe -ExecutionPolicy Bypass -File ${currentDir}/scripts/update.ps1`;
+    } else if (os.indexOf("linux") !== -1) {
+      updateCommandElement.textContent = `bash /${currentDir}/scripts/update.sh`;
+    }
+
   </script>
 </body>
 </html>

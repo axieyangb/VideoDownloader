@@ -15,6 +15,8 @@ if [ ! -f "$BinaryFile" ]; then
   exit 1
 fi
 
+chmod +x $BinaryFile
+
 # Check for missing URL parameter
 if [ "$#" -eq 0 ]; then
   echo "Error: Please provide a YouTube video URL as the first argument."
